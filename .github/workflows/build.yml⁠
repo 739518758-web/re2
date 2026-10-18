@@ -1,1 +1,39 @@
-1
+name: Build iOS Dylib
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Install ldid
+      run: |
+        brew install ldid
+
+    - name: Install Theos
+      run: |
+        git clone --recursive https://github.com/theos/theos.git ~/theos
+        echo "THEOS=~/theos" >> $GITHUB_ENV
+
+    - name: Build Tweak
+      env:
+        THEOS: ~/theos
+      run: |
+        make clean
+        make
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: PUBGMCardVerify-Dylib
+        path: .theos/obj/debug/PUBGMCardVerify.dylib
+        if-no-files-found: error
