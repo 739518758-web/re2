@@ -9,4 +9,4 @@ PUBGMCardVerify_FILES = Tweak.xm
 PUBGMCardVerify_CFLAGS = -fobjc-arc
 PUBGMCardVerify_FRAMEWORKS = UIKit Foundation
 
-include $(THEOS_MAKE_PATH)/tweak.mk
+include $(THEOS_MAKE_PATH)/tweak.xm
