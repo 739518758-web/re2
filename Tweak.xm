@@ -1,15 +1,15 @@
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-%hook NSObject
-
-- (id)init {
-    id result = %orig;
-    return result;
-}
-
-%end
-
 %ctor {
-    NSLog(@"[PUBGMCardVerify] Tweak loaded successfully!");
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSString *bundleIdentifier = [bundle bundleIdentifier];
+    
+    NSArray *allowedBundleIDs = @[
+        @"com.tencent.ig",
+        @"com.tencent.tmgp.pubgmhd"
+    ];
+    
+    if (![allowedBundleIDs containsObject:bundleIdentifier]) {
+        return;
+    }
 }
